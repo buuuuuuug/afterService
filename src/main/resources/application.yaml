@@ -1,0 +1,37 @@
+server:
+  port: 8085
+
+mybatis:
+  type-aliases-package: xmu.ooad.domain
+  mapper-locations: classpath:xmu.ooad.mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+#eureka:
+ # client:
+  #  service-url:
+    #  defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: AFTERSALE-SERVICE
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/oolitemall
+    username: root
+    password: 980710
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 3
+      min-idle: 3
+      max-active: 10
+      max-wait: 60000
+      stat-view-servlet:
+        login-username: admin
+        login-password: 123456
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 100
+      validation-query: select 1
+

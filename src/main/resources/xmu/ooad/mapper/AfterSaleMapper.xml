@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="xmu.ooad.mapper.AfterSaleMapper">
+    
+    <resultMap id="AfterSale" type="xmu.ooad.domain.AfterSale">
+        <result property="beApplied" column="is_applied"/>
+        <result property="beDeleted" column="is_deleted"/>
+        <result property="statusCode" column="status"/>
+    </resultMap>
+
+    <select id="findAfterSales" parameterType="Integer" resultMap="AfterSale">
+        select * from aftersales_service
+        where user_id=#{userId};
+    </select>
+
+    <select id="findAfterSaleById" parameterType="Integer" resultMap="AfterSale">
+        select *
+        from aftersales_service
+        where id=#{id};
+    </select>
+
+    <select id="findAfterSalesByUserId" parameterType="Integer" resultMap="AfterSale">
+        select
+            id,
+            user_id,
+            gmt_create,
+            gmt_modified,
+            is_deleted,
+            goods_type,
+            apply_time,
+            apply_reason,
+            end_time,
+            type,
+            is_applied,
+            status,
+            number,
+            order_item_id
+        from aftersales_service
+        where user_id=#{userId} and is_deleted=0;
+    </select>
+
+    <update id="updateAfterSale" parameterType="xmu.ooad.domain.AfterSale">
+        update aftersales_service
+        set
+            gmt_modified=#{gmtModified},
+            is_deleted=#{beDeleted},
+            goods_type=#{goodsType},
+            apply_time=#{applyTime},
+            apply_reason=#{applyReason},
+            end_time=#{endTime},
+            type=#{type},
+            is_applied=#{beApplied},
+            status=#{statusCode},
+            number=#{number},
+            order_item_id=#{orderItemId}
+        where id=#{id} ;
+    </update>
+
+    <insert id="insertAfterSale" parameterType="xmu.ooad.domain.AfterSale" useGeneratedKeys="true" keyProperty="id">
+        insert into aftersales_service(
+            user_id,
+            gmt_create,
+            gmt_modified,
+            is_deleted,
+            goods_type,
+            apply_time,
+            apply_reason,
+            end_time,
+            type,
+            is_applied,
+            status,
+            number,
+            order_item_id
+        )
+        values(
+        #{userId},
+        #{gmtCreate},
+        #{gmtModified},
+        #{beDeleted},
+        #{goodsType},
+        #{applyTime},
+        #{applyReason},
+        #{endTime},
+        #{type},
+        #{beApplied},
+        #{statusCode},
+        #{number},
+        #{orderItemId}
+        )
+    </insert>
+
+    <update id="deleteAfterSale" parameterType="Integer">
+        update aftersales_service
+        set is_deleted=1
+        where id=#{id} ;
+    </update>
+
+</mapper>
